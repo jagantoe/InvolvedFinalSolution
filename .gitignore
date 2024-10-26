@@ -1,6 +1,14 @@
 # Created by https://www.toptal.com/developers/gitignore/api/windows,macos,rider,visualstudio,visualstudiocode,dotnetcore,aspnetcore,angular
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,rider,visualstudio,visualstudiocode,dotnetcore,aspnetcore,angular
 
+### SQLite ###
+*.db
+*.sqlite
+*.sqlite3
+*-journal
+*-wal
+*-shm
+
 ### Angular ###
 ## Angular ##
 # compiled output

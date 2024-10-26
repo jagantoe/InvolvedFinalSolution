@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Contracts.DTOs;
+﻿using Contracts.DTOs;
 using Contracts.Interfaces;
 using Domain;
 
@@ -17,13 +16,13 @@ public class TodoService(IParentTodoRepository todoRepository)
                 Id = todo.Id,
                 Title = todo.Title,
                 Assignee = todo.Assignee,
-                Description = todo.Description,
+                Description = todo.Description
             })
             .ToList();
 
         return todoDtos;
     }
-    
+
     public async Task<TodoDto?> GetTodoById(int id)
     {
         var todo = await todoRepository.GetGetById(id);
@@ -31,16 +30,16 @@ public class TodoService(IParentTodoRepository todoRepository)
         if (todo == null) return null;
 
         var todoDto = new TodoDto
-            {
-                Id = todo.Id,
-                Title = todo.Title,
-                Assignee = todo.Assignee,
-                Description = todo.Description,
-            };
+        {
+            Id = todo.Id,
+            Title = todo.Title,
+            Assignee = todo.Assignee,
+            Description = todo.Description
+        };
 
         return todoDto;
     }
-    
+
 
     public async Task<TodoDto> AddTodo(TodoDto todoDto)
     {
@@ -48,7 +47,7 @@ public class TodoService(IParentTodoRepository todoRepository)
         {
             Title = todoDto.Title,
             Assignee = todoDto.Assignee,
-            Description = todoDto.Description,
+            Description = todoDto.Description
         };
 
         todo = await todoRepository.Add(todo);
@@ -58,7 +57,7 @@ public class TodoService(IParentTodoRepository todoRepository)
             Id = todo.Id,
             Title = todo.Title,
             Assignee = todo.Assignee,
-            Description = todo.Description,
+            Description = todo.Description
         };
     }
 

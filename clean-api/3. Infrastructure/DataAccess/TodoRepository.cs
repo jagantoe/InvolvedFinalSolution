@@ -13,7 +13,7 @@ public class ParentTodoRepository(TodoDbContext dbContext) : IParentTodoReposito
 
         if (!string.IsNullOrEmpty(title))
             query = query.Where(todo => todo.Title.Contains(title));
-        
+
         if (!string.IsNullOrEmpty(assignee))
             query = query.Where(todo => todo.Assignee.Contains(assignee));
 

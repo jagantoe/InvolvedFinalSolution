@@ -6,7 +6,8 @@ namespace DataAccess.Configuration;
 
 public static class DataAccessServiceRegistration
 {
-    public static void RegisterSqliteDataAccessServices(this IServiceCollection serviceCollection, IConfiguration configuration)
+    public static void RegisterSqliteDataAccessServices(this IServiceCollection serviceCollection,
+        IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("Database");
 
@@ -14,8 +15,9 @@ public static class DataAccessServiceRegistration
 
         serviceCollection.AddScoped<IParentTodoRepository, ParentTodoRepository>();
     }
-    
-    public static void RegisterSqlServerDataAccessServices(this IServiceCollection serviceCollection, IConfiguration configuration)
+
+    public static void RegisterSqlServerDataAccessServices(this IServiceCollection serviceCollection,
+        IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("Database");
 

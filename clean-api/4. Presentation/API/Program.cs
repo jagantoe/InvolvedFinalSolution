@@ -1,5 +1,6 @@
 using Business.Configuration;
 using DataAccess.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +9,7 @@ builder.Services.RegisterTodoApplicationServices();
 
 if (builder.Environment.IsDevelopment())
     builder.Services.RegisterSqliteDataAccessServices(builder.Configuration);
-else 
+else
     builder.Services.RegisterSqlServerDataAccessServices(builder.Configuration);
 
 builder.Services.AddControllers();
@@ -19,7 +20,7 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
@@ -34,7 +35,9 @@ app.MapControllers();
 using (var serviceScope = app.Services.CreateScope())
 {
     var context = serviceScope.ServiceProvider.GetRequiredService<TodoDbContext>();
-    context.Database.EnsureCreated(); // Creates the database if it doesn't exist
+    if (builder.Environment.IsDevelopment())
+        context.Database.EnsureCreated(); // Creates the database if it doesn't exist
+    context.Database.Migrate();
 }
 
 app.Run();
