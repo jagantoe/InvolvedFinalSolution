@@ -7,16 +7,17 @@ namespace Business;
 
 public class TodoService(IParentTodoRepository todoRepository)
 {
-    public async Task<ICollection<TodoDto>> GetTodos()
+    public async Task<ICollection<TodoDto>> SearchTodos(string? title, string? description)
     {
-        var todos = await todoRepository.GetAll();
+        var todos = await todoRepository.Search(title, description);
 
         var todoDtos = todos
-            .Select(pt => new TodoDto
+            .Select(todo => new TodoDto
             {
-                Id = pt.Id,
-                Title = pt.Title,
-                Description = pt.Description,
+                Id = todo.Id,
+                Title = todo.Title,
+                Assignee = todo.Assignee,
+                Description = todo.Description,
             })
             .ToList();
 
@@ -33,6 +34,7 @@ public class TodoService(IParentTodoRepository todoRepository)
             {
                 Id = todo.Id,
                 Title = todo.Title,
+                Assignee = todo.Assignee,
                 Description = todo.Description,
             };
 
@@ -45,6 +47,7 @@ public class TodoService(IParentTodoRepository todoRepository)
         var todo = new Todo
         {
             Title = todoDto.Title,
+            Assignee = todoDto.Assignee,
             Description = todoDto.Description,
         };
 
@@ -54,6 +57,7 @@ public class TodoService(IParentTodoRepository todoRepository)
         {
             Id = todo.Id,
             Title = todo.Title,
+            Assignee = todo.Assignee,
             Description = todo.Description,
         };
     }

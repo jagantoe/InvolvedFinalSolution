@@ -7,9 +7,17 @@ namespace DataAccess;
 
 public class ParentTodoRepository(TodoDbContext dbContext) : IParentTodoRepository
 {
-    public async Task<ICollection<Todo>> GetAll()
+    public async Task<ICollection<Todo>> Search(string? title, string? assignee)
     {
-        return await dbContext.Todos.ToListAsync();
+        var query = dbContext.Todos.AsQueryable();
+
+        if (!string.IsNullOrEmpty(title))
+            query = query.Where(todo => todo.Title.Contains(title));
+        
+        if (!string.IsNullOrEmpty(assignee))
+            query = query.Where(todo => todo.Assignee.Contains(assignee));
+
+        return await query.ToListAsync();
     }
 
     public async Task<Todo?> GetGetById(int id)
