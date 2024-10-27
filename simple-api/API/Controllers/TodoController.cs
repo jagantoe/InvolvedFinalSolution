@@ -32,6 +32,21 @@ public class TodoController : ControllerBase
 
         return Ok(todo.Id);
     }
+    
+    [HttpGet("[action]")]
+    public IActionResult GetAll()
+    {
+        var todoDtos = _todoDbContext.Todos
+            .Select(todo => new TodoDto
+            {
+                Id = todo.Id,
+                Title = todo.Title,
+                Assignee = todo.Assignee
+            })
+            .ToList();
+
+        return Ok(todoDtos);
+    }
 
     [HttpGet("[action]/{id}")]
     public IActionResult Get([FromRoute] int id)
@@ -48,21 +63,6 @@ public class TodoController : ControllerBase
         };
 
         return Ok(todoDto);
-    }
-
-    [HttpGet("[action]")]
-    public IActionResult GetAll()
-    {
-        var todoDtos = _todoDbContext.Todos
-            .Select(todo => new TodoDto
-            {
-                Id = todo.Id,
-                Title = todo.Title,
-                Assignee = todo.Assignee
-            })
-            .ToList();
-
-        return Ok(todoDtos);
     }
 
     [HttpGet("[action]")]
