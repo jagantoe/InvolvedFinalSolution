@@ -1,0 +1,45 @@
+﻿@page "/fetchdata"
+@using API
+@using API.DTOs
+@using API.Services
+@inject TodoService TodoService
+
+<PageTitle>Weather forecast</PageTitle>
+
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from a service.</p>
+
+@if (todoDtos == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var todo in todoDtos)
+            {
+                <tr>
+                    <td>@todo.Id</td>
+                    <td>@todo.Title</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<TodoDto>? todoDtos;
+
+    protected override void OnInitialized()
+    {
+        todoDtos = TodoService.GetAll();
+    }
+}

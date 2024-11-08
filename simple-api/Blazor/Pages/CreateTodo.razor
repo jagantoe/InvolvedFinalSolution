@@ -1,0 +1,37 @@
+@page "/createTodo"
+@using API.DTOs
+@using API.Services
+@inject TodoService TodoService
+
+<h1>Create todo</h1>
+<EditForm method="post" OnSubmit="Sumbit" Model="todoModel">
+    <div class="mb-3">
+        <label class="form-label">Title:
+
+        </label>
+        <InputText class="form-control" @bind-Value="todoModel.Title"></InputText>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Description:
+        </label>
+        <InputText class="form-control" @bind-Value="todoModel.Description"></InputText>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Assignee:
+        </label>
+        <InputText class="form-control" @bind-Value="todoModel.Assignee"></InputText>
+    </div>
+    <div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </div>
+</EditForm>
+
+
+@code {
+    private TodoDto todoModel = new TodoDto();
+
+    private void Sumbit()
+    {
+        TodoService.Add(todoModel);
+    }
+}

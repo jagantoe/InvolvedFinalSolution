@@ -1,6 +1,5 @@
-using API.Database;
 using API.DTOs;
-using API.Models;
+using API.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -9,41 +8,25 @@ namespace API.Controllers;
 [ApiController]
 public class TodoController : ControllerBase
 {
-    private readonly TodoDbContext _todoDbContext;
+    private readonly TodoService _todoService;
 
-    public TodoController(TodoDbContext todoDbContext)
+    public TodoController(TodoService todoService)
     {
-        _todoDbContext = todoDbContext;
-        todoDbContext.Database.EnsureCreated();
+        _todoService = todoService;
     }
 
     [HttpPost("[action]")]
     public IActionResult Add([FromBody] TodoDto todoDto)
     {
-        var todo = new Todo
-        {
-            Id = todoDto.Id,
-            Title = todoDto.Title,
-            Assignee = todoDto.Assignee
-        };
+       var addedTodoId = _todoService.Add(todoDto);
 
-        _todoDbContext.Todos.Add(todo);
-        _todoDbContext.SaveChanges();
-
-        return Ok(todo.Id);
+        return Ok(addedTodoId);
     }
     
     [HttpGet("[action]")]
     public IActionResult GetAll()
     {
-        var todoDtos = _todoDbContext.Todos
-            .Select(todo => new TodoDto
-            {
-                Id = todo.Id,
-                Title = todo.Title,
-                Assignee = todo.Assignee
-            })
-            .ToList();
+        var todoDtos = _todoService.GetAll();
 
         return Ok(todoDtos);
     }
@@ -51,16 +34,7 @@ public class TodoController : ControllerBase
     [HttpGet("[action]/{id}")]
     public IActionResult Get([FromRoute] int id)
     {
-        var todo = _todoDbContext.Todos.Find(id);
-
-        if (todo == null) return NotFound();
-
-        var todoDto = new TodoDto
-        {
-            Id = todo.Id,
-            Title = todo.Title,
-            Assignee = todo.Assignee
-        };
+        var todoDto = _todoService.Get(id);
 
         return Ok(todoDto);
     }
@@ -68,22 +42,7 @@ public class TodoController : ControllerBase
     [HttpGet("[action]")]
     public IActionResult Search([FromQuery] string? title, [FromQuery] string? assignee)
     {
-        var todos = _todoDbContext.Todos.AsQueryable();
-
-        if (!string.IsNullOrWhiteSpace(title))
-            todos = todos.Where(todo => todo.Title.Contains(title));
-
-        if (!string.IsNullOrWhiteSpace(assignee))
-            todos = todos.Where(todo => todo.Title.Contains(assignee));
-
-        var todoDtos = todos
-            .Select(todo => new TodoDto
-            {
-                Id = todo.Id,
-                Title = todo.Title,
-                Assignee = todo.Assignee
-            })
-            .ToList();
+        var todoDtos = _todoService.Search(title, assignee);
 
         return Ok(todoDtos);
     }
@@ -92,30 +51,16 @@ public class TodoController : ControllerBase
     [HttpPut("[action]")]
     public IActionResult Update([FromBody] TodoDto todoDto)
     {
-        var todo = _todoDbContext.Todos.Find(todoDto.Id);
+        var updated = _todoService.Update(todoDto);
 
-        if (todo == null) return NotFound();
-
-        todo.Title = todoDto.Title;
-        todo.Assignee = todoDto.Assignee;
-        todo.Description = todoDto.Description;
-
-        _todoDbContext.Todos.Update(todo);
-        _todoDbContext.SaveChanges();
-
-        return Ok();
+        return updated ? Ok() : NotFound();
     }
 
     [HttpDelete("[action]/{id}")]
     public IActionResult Delete([FromRoute] int id)
     {
-        var todo = _todoDbContext.Todos.Find(id);
+        var deleted = _todoService.Delete(id);
 
-        if (todo == null) return NotFound();
-
-        _todoDbContext.Todos.Remove(todo);
-        _todoDbContext.SaveChanges();
-
-        return Ok();
+        return deleted ? Ok() : NotFound();
     }
 }
