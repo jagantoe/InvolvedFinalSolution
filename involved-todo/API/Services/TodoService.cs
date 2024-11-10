@@ -19,7 +19,8 @@ public class TodoService
         var todo = new Todo
         {
             Title = todoDto.Title,
-            Assignee = todoDto.Assignee
+            Assignee = todoDto.Assignee,
+            Description = todoDto.Description
         };
 
         _todoDbContext.Todos.Add(todo);
@@ -43,7 +44,8 @@ public class TodoService
             {
                 Id = todo.Id,
                 Title = todo.Title,
-                Assignee = todo.Assignee
+                Assignee = todo.Assignee,
+                Description = todo.Description
             })
             .ToList();
 
@@ -60,7 +62,8 @@ public class TodoService
         {
             Id = todo.Id,
             Title = todo.Title,
-            Assignee = todo.Assignee
+            Assignee = todo.Assignee,
+            Description = todo.Description
         };
 
         return todoDto;
@@ -73,7 +76,8 @@ public class TodoService
             {
                 Id = todo.Id,
                 Title = todo.Title,
-                Assignee = todo.Assignee
+                Assignee = todo.Assignee,
+                Description = todo.Description
             })
             .ToList();
 
