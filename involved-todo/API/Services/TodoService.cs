@@ -1,4 +1,4 @@
-﻿using API.Database;
+using API.Database;
 using API.DTOs;
 using API.Models;
 
@@ -29,7 +29,7 @@ public class TodoService
         return todo.Id;
     }
 
-    public List<TodoDto> Search(string? title, string? assignee)
+    public List<TodoDto> Search(string? title = null, string? assignee = null)
     {
         var todos = _todoDbContext.Todos.AsQueryable();
 
@@ -37,7 +37,7 @@ public class TodoService
             todos = todos.Where(todo => todo.Title.Contains(title));
 
         if (!string.IsNullOrWhiteSpace(assignee))
-            todos = todos.Where(todo => todo.Title.Contains(assignee));
+            todos = todos.Where(todo => todo.Assignee.Contains(assignee));
 
         var todoDtos = todos
             .Select(todo => new TodoDto

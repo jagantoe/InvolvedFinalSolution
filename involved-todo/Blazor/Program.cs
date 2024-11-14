@@ -1,12 +1,17 @@
 using API.Database;
 using API;
 using API.Services;
+using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+
+// Add MudBlazor
+builder.Services.AddMudServices();
+
 
 var connectionString = builder.Configuration.GetConnectionString("Database");
 builder.Services.AddSqlite<TodoDbContext>(connectionString);

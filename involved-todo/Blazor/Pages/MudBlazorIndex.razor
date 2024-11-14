@@ -1,4 +1,4 @@
-﻿@page "/"
+﻿@page "/MudBlazor"
 @using API.DTOs
 @using API.Services
 
@@ -19,30 +19,25 @@ else
            @bind="_nameFilter" @bind:after="@GetTodos">
     <input class="form-control" type="text" placeholder="Filter assignee..."
            @bind="_assigneeFilter" @bind:after="@GetTodos">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Assignee</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var todo in _todos)
-            {
-                <tr>
-                    <td>@todo.Title</td>
-                    <td>@todo.Description</td>
-                    <td>@todo.Assignee</td>
-                    <td>
-                        <button @onclick="()=>UpdateTodo(todo.Id)">Update</button>
-                        <button @onclick="()=>DeleteTodo(todo.Id)">Delete todo</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+
+    <MudTable Items="@_todos" Hover="true" LoadingProgressColor="Color.Info">
+        <HeaderContent>
+            <MudTh>Title</MudTh>
+            <MudTh>Description</MudTh>
+            <MudTh>Assignee</MudTh>
+            <MudTh></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Title">@context.Title</MudTd>
+            <MudTd DataLabel="Description">@context.Description</MudTd>
+            <MudTd DataLabel="Assignee">@context.Assignee</MudTd>
+            <MudTd DataLabel="Actions">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="()=>UpdateTodo(context.Id)">Update</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="()=>DeleteTodo(context.Id)">Delete TODO</MudButton>
+
+            </MudTd>
+        </RowTemplate>
+    </MudTable>
 }
 
 @code {

@@ -1,0 +1,32 @@
+@page "/Update/{Id:int}"
+@using API.DTOs
+@using API.Services
+
+@inject TodoService TodoService
+@inject NavigationManager NavigationManager
+
+<h1>Update todo</h1>
+
+@if (todoModel == null)
+{
+    <p><em>Loading data</em></p>
+}
+else
+{
+    <TodoForm todoModel="todoModel" SubmitModel="@Sumbit"></TodoForm>
+}
+@code {
+    [Parameter] public int Id { get; set; }
+    private TodoDto todoModel;
+
+    protected override void OnInitialized()
+    {
+        todoModel = TodoService.Get(Id);
+    }
+
+    public void Sumbit()
+    {
+        TodoService.Update(todoModel);
+        NavigationManager.NavigateTo("/");
+    }
+}
