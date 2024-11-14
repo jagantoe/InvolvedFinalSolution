@@ -7,7 +7,7 @@ namespace DataAccess;
 
 public class ParentTodoRepository(TodoDbContext dbContext) : IParentTodoRepository
 {
-    public async Task<ICollection<Todo>> Search(string? title, string? assignee)
+    public async Task<ICollection<Todo>> Search(string? title = null, string? assignee= null)
     {
         var query = dbContext.Todos.AsQueryable();
 

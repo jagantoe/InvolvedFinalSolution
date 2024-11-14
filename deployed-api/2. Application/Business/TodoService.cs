@@ -6,7 +6,7 @@ namespace Business;
 
 public class TodoService(IParentTodoRepository todoRepository)
 {
-    public async Task<ICollection<TodoDto>> SearchTodos(string? title, string? description)
+    public async Task<ICollection<TodoDto>> SearchTodos(string? title = null, string? description = null)
     {
         var todos = await todoRepository.Search(title, description);
 
