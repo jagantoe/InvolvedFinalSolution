@@ -6,11 +6,10 @@ import { ToDo } from '../types/todo';
   providedIn: 'root'
 })
 export class ApiService {
+  // Inject the HttpClient so we can make API calls
   httpClient = inject(HttpClient);
+  // The base url
   baseUrl = "http://localhost:5136/api/ToDo";
-
-  constructor() {
-  }
 
   getAll() {
     return this.httpClient.get<ToDo[]>(`${this.baseUrl}/GetAll`);

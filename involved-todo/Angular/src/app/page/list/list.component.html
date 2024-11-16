@@ -1,0 +1,6 @@
+<div class="container">
+  <!-- Create a component for each item in our array -->
+  @for (item of items; track $index) {
+    <app-todo [todo]="item" (delete)="deleteTodo($event)"></app-todo>
+  }
+</div>
