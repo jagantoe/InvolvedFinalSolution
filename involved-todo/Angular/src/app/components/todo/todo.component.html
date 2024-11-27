@@ -1,0 +1,16 @@
+@let item = todo();
+<mat-card appearance="outlined" class="item">
+  <mat-card-header class="overflow">
+    <mat-card-title>{{ item.title }}</mat-card-title>
+    <mat-card-subtitle>{{ item.assignee }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content class="overflow">
+    {{ item.description }}
+  </mat-card-content>
+  <mat-card-actions class="button-group">
+    <button mat-button [routerLink]="['/update', item.id]">Update</button>
+    <button mat-button color="warn" (click)="delete.emit(item.id)">
+      Delete
+    </button>
+  </mat-card-actions>
+</mat-card>

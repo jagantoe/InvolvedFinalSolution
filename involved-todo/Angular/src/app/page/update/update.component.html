@@ -1,0 +1,25 @@
+<div class="center">
+  @if (item) {
+    <div class="form">
+      <h1>Update</h1>
+      <mat-form-field appearance="outline">
+        <mat-label>Title</mat-label>
+        <input matInput matNativeControl [(ngModel)]="item.title" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Assignee</mat-label>
+        <input matInput [(ngModel)]="item.assignee" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea matInput [(ngModel)]="item.description"></textarea>
+      </mat-form-field>
+      <div class="button-group">
+        <button mat-stroked-button routerLink="/">Cancel</button>
+        <button mat-flat-button (click)="save()">Save</button>
+      </div>
+    </div>
+  } @else {
+    <mat-spinner></mat-spinner>
+  }
+</div>

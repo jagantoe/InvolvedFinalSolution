@@ -1,0 +1,9 @@
+<mat-toolbar>
+  <span routerLink="/">{{ title }}</span>
+  <span class="spacer"></span>
+  <button mat-icon-button routerLink="/new">
+    <mat-icon>add</mat-icon>
+  </button>
+</mat-toolbar>
+<!-- The router-outlet tells Angular where to load the components declared in the routes -->
+<router-outlet></router-outlet>

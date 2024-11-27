@@ -1,0 +1,14 @@
+.item {
+    display: grid;
+    grid-template-rows: repeat(3, 80px);
+}
+
+.overflow {
+    overflow: hidden;
+    word-break: break-all;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+}
