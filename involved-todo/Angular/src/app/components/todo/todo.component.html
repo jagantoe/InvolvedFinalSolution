@@ -8,10 +8,8 @@
     {{ item.description }}
   </mat-card-content>
   <mat-card-actions class="button-group">
-    <button mat-button color="error" [routerLink]="['/update', item.id]">
-      Update
-    </button>
-    <button mat-button class="secondary-button" (click)="delete.emit(item.id)">
+    <button mat-button [routerLink]="['/update', item.id]">Update</button>
+    <button mat-button color="warn" (click)="delete.emit(item.id)">
       Delete
     </button>
   </mat-card-actions>
